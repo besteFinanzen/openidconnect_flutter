@@ -10,6 +10,8 @@ class InteractiveAuthorizationRequest extends TokenRequest {
   final String codeChallenge;
   final bool useWebPopup;
   final String redirectUrl;
+  final Future<flutterWebView.NavigationDecision?> Function(
+      BuildContext, flutterWebView.NavigationRequest)? navigationInterceptor;
 
   static Future<InteractiveAuthorizationRequest> create({
     required String clientId,
@@ -24,6 +26,9 @@ class InteractiveAuthorizationRequest extends TokenRequest {
     int popupWidth = 640,
     int popupHeight = 600,
     bool useWebPopup = true,
+    Future<flutterWebView.NavigationDecision?> Function(
+            BuildContext, flutterWebView.NavigationRequest)?
+        navigationInterceptor,
   }) async {
     final codeVerifier = List.generate(
         128, (i) => _charset[Random.secure().nextInt(_charset.length)]).join();
@@ -49,6 +54,7 @@ class InteractiveAuthorizationRequest extends TokenRequest {
       popupHeight: popupHeight,
       popupWidth: popupWidth,
       useWebPopup: useWebPopup,
+      navigationInterceptor: navigationInterceptor,
     );
   }
 
@@ -67,6 +73,7 @@ class InteractiveAuthorizationRequest extends TokenRequest {
     this.popupWidth = 640,
     this.popupHeight = 480,
     this.useWebPopup = true,
+    this.navigationInterceptor,
   }) : super(
           configuration: configuration,
           clientId: clientId,

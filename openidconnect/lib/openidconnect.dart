@@ -81,6 +81,8 @@ class OpenIdConnect {
       queryParameters: request.toMap(),
     );
 
+    print("uri: $uri");
+
     //These are special cases for the various different platforms because of limitations in pubspec.yaml
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       responseUrl = await OpenIdConnectAndroidiOS.authorizeInteractive(
@@ -90,6 +92,7 @@ class OpenIdConnect {
         redirectUrl: request.redirectUrl,
         popupHeight: request.popupHeight,
         popupWidth: request.popupWidth,
+        navigationInterceptor: request.navigationInterceptor,
       );
     } else if (kIsWeb) {
       final storage = FlutterSecureStorage();
