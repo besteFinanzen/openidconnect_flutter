@@ -234,18 +234,20 @@ packages:
   openidconnect_platform_interface:
     dependency: transitive
     description:
-      name: openidconnect_platform_interface
-      sha256: "58831207e5a01b9db0f64da55bd109a03d7ce1c5c30a22a4a535a8a052a98afc"
-      url: "https://pub.dev"
-    source: hosted
+      path: openidconnect_platform_interface
+      ref: HEAD
+      resolved-ref: c0387b65faa891ff2942d6da3b86a67fbe209749
+      url: "https://github.com/DrBu7cher/openidconnect_flutter.git"
+    source: git
     version: "1.0.13"
   openidconnect_web:
     dependency: transitive
     description:
-      name: openidconnect_web
-      sha256: f22caf3d94900d5e705328518ddf331d45280f11b95cabefa6b9483fe7188d6d
-      url: "https://pub.dev"
-    source: hosted
+      path: openidconnect_web
+      ref: HEAD
+      resolved-ref: c0387b65faa891ff2942d6da3b86a67fbe209749
+      url: "https://github.com/DrBu7cher/openidconnect_flutter.git"
+    source: git
     version: "1.0.21"
   path:
     dependency: transitive
