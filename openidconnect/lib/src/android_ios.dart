@@ -65,7 +65,12 @@ class OpenIdConnectAndroidiOS {
                       },
                       backgroundColor: backgroundColor,
                       onPageFinished: (url) {
-                        if (url.startsWith(redirectUrl)) {
+                        if (!Platform.isIOS && url.startsWith(redirectUrl)) {
+                          Navigator.pop(dialogContext, url);
+                        }
+                      },
+                      onPageStarted: (url) {
+                        if (Platform.isIOS && url.startsWith(redirectUrl)) {
                           Navigator.pop(dialogContext, url);
                         }
                       },
