@@ -54,6 +54,10 @@ class OpenIdConnectAndroidiOS {
                       initialUrl: authorizationUrl,
                       zoomEnabled: false,
                       navigationDelegate: (navigation) async {
+                        if (navigation.url.startsWith(redirectUrl)) {
+                          Navigator.pop(dialogContext, navigation.url);
+                          return flutterWebView.NavigationDecision.navigate;
+                        }
                         if (navigationInterceptor != null) {
                           var interceptionResult = await navigationInterceptor
                               .call(context, navigation);
@@ -64,18 +68,6 @@ class OpenIdConnectAndroidiOS {
                         return flutterWebView.NavigationDecision.navigate;
                       },
                       backgroundColor: backgroundColor,
-                      onPageFinished: (url) {
-                        if (!Platform.isIOS && url.startsWith(redirectUrl)) {
-                          print("onPageFinished: $url");
-                          Navigator.pop(dialogContext, url);
-                        }
-                      },
-                      onPageStarted: (url) {
-                        if (Platform.isIOS && url.startsWith(redirectUrl)) {
-                          print("onPageStarted: $url");
-                          Navigator.pop(dialogContext, url);
-                        }
-                      },
                     ),
                   ),
                   Positioned(
