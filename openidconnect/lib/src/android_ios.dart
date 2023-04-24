@@ -55,7 +55,9 @@ class OpenIdConnectAndroidiOS {
                       zoomEnabled: false,
                       navigationDelegate: (navigation) async {
                         if (navigation.url.startsWith(redirectUrl)) {
-                          Navigator.pop(dialogContext, navigation.url);
+                          if (dialogContext.mounted) {
+                            Navigator.pop(dialogContext, navigation.url);
+                          }
                           return flutterWebView.NavigationDecision.navigate;
                         }
                         if (navigationInterceptor != null) {
@@ -79,7 +81,10 @@ class OpenIdConnectAndroidiOS {
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(20))),
                       child: IconButton(
-                        onPressed: () => Navigator.pop(dialogContext, null),
+                        onPressed: () {
+                          if (dialogContext.mounted)
+                            Navigator.pop(dialogContext, null);
+                        },
                         icon: Icon(Icons.close),
                       ),
                     ),
