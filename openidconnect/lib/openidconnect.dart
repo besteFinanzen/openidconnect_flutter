@@ -14,6 +14,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:retry/retry.dart';
 import 'package:webview_flutter/webview_flutter.dart' as flutterWebView;
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart'
+    as flutterWebViewIOS;
+import 'package:webview_flutter_android/webview_flutter_android.dart'
+    as flutterWebViewAndroid;
 import 'package:url_launcher/url_launcher.dart';
 
 part './src/openidconnect_client.dart';
