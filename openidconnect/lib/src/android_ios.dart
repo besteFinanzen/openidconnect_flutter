@@ -14,11 +14,6 @@ class OpenIdConnectAndroidiOS {
             BuildContext, flutterWebView.NavigationRequest)?
         navigationInterceptor,
   }) async {
-    //Create the url
-
-    flutterWebView.WebViewController _webviewcontroller =
-        flutterWebView.WebViewController();
-
     late final flutterWebView.PlatformWebViewControllerCreationParams params;
     if (flutterWebView.WebViewPlatform.instance
         is flutterWebViewIOS.WebKitWebViewPlatform) {
@@ -27,43 +22,49 @@ class OpenIdConnectAndroidiOS {
       params = const flutterWebView.PlatformWebViewControllerCreationParams();
     }
 
-    final flutterWebView.WebViewController controller =
+    final flutterWebView.WebViewController _webviewcontroller =
         flutterWebView.WebViewController.fromPlatformCreationParams(params)
           ..setJavaScriptMode(flutterWebView.JavaScriptMode.unrestricted)
           ..loadRequest(Uri.parse(authorizationUrl))
-          ..setNavigationDelegate(flutterWebView.NavigationDelegate(
-            onNavigationRequest: (navigation) async {
-              if (navigation.url.startsWith(redirectUrl)) {
-                if (context.mounted) {
-                  Navigator.pop(context, navigation.url);
-                }
-                return flutterWebView.NavigationDecision.navigate;
-              }
-              if (navigationInterceptor != null) {
-                var interceptionResult =
-                    await navigationInterceptor.call(context, navigation);
-
-                if (interceptionResult != null) return interceptionResult;
-              }
-              return flutterWebView.NavigationDecision.navigate;
-            },
-          ))
           ..enableZoom(false)
           ..setBackgroundColor(Colors.transparent);
 
-    if (controller.platform is flutterWebViewIOS.WebKitWebViewController) {
-      (controller.platform as flutterWebViewIOS.WebKitWebViewController)
+    if (_webviewcontroller.platform
+        is flutterWebViewIOS.WebKitWebViewController) {
+      (_webviewcontroller.platform as flutterWebViewIOS.WebKitWebViewController)
           .setAllowsBackForwardNavigationGestures(true);
-    } else if (controller.platform
+    } else if (_webviewcontroller.platform
         is flutterWebViewAndroid.AndroidWebViewController) {}
 
     String? result = await showDialog<String?>(
+      barrierColor: Colors.transparent,
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) {
+        _webviewcontroller
+            .setNavigationDelegate(flutterWebView.NavigationDelegate(
+          onNavigationRequest: (navigation) async {
+            if (navigation.url.startsWith(redirectUrl)) {
+              if (dialogContext.mounted) {
+                Navigator.pop(dialogContext, navigation.url);
+              }
+              return flutterWebView.NavigationDecision.navigate;
+            }
+            if (navigationInterceptor != null) {
+              var interceptionResult =
+                  await navigationInterceptor.call(context, navigation);
+
+              if (interceptionResult != null) return interceptionResult;
+            }
+            return flutterWebView.NavigationDecision.navigate;
+          },
+        ));
         return Visibility(
           visible: !inBackground,
           child: AlertDialog(
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
             insetPadding: EdgeInsets.zero,
             titlePadding: EdgeInsets.zero,
             contentPadding: EdgeInsets.zero,
@@ -84,7 +85,7 @@ class OpenIdConnectAndroidiOS {
                     height:
                         min(popupHeight, MediaQuery.of(context).size.height),
                     child: flutterWebView.WebViewWidget(
-                      controller: controller,
+                      controller: _webviewcontroller,
                     ),
                   ),
                   Positioned(
