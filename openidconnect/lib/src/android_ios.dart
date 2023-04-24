@@ -48,7 +48,8 @@ class OpenIdConnectAndroidiOS {
               return flutterWebView.NavigationDecision.navigate;
             },
           ))
-          ..enableZoom(false);
+          ..enableZoom(false)
+          ..setBackgroundColor(Colors.transparent);
 
     if (controller.platform is flutterWebViewIOS.WebKitWebViewController) {
       (controller.platform as flutterWebViewIOS.WebKitWebViewController)
