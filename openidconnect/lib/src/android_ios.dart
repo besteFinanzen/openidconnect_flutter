@@ -36,7 +36,7 @@ class OpenIdConnectAndroidiOS {
     } else if (_webviewcontroller.platform
         is flutterWebViewAndroid.AndroidWebViewController) {}
 
-    String? result = await showDialog<String?>(
+    String? result = await showDialog<String>(
       barrierColor: Colors.transparent,
       context: context,
       barrierDismissible: false,
