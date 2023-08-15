@@ -9,7 +9,8 @@ class OpenIdConnectAndroidiOS {
     required double popupWidth,
     required double popupHeight,
     Color? backgroundColor,
-    bool inBackground = false,
+    final Color barColor = Colors.blue,
+    final bool inBackground = false,
     Future<flutterWebView.NavigationDecision?> Function(
             BuildContext, flutterWebView.NavigationRequest)?
         navigationInterceptor,
@@ -90,16 +91,23 @@ class OpenIdConnectAndroidiOS {
                       if (progress != 100) Align(
                         alignment: Alignment.center,
                         child: Container(
+                          margin: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20),
                           width: min(popupWidth, MediaQuery.of(context).size.width),
+                          height: 100,
                           decoration: BoxDecoration(
                               color: backgroundColor ?? Colors.black54,
                               borderRadius: BorderRadius.all(Radius.circular(20))),
-                          child: LinearProgressIndicator(
-                            value: progress / 100,
-                            minHeight: 10,
-                            backgroundColor: Colors.transparent,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                backgroundColor ?? Colors.blue),
+                          child: Stack(
+                            children: [
+                              LinearProgressIndicator(
+                                value: progress / 100,
+                                minHeight: 10,
+                                backgroundColor: Colors.transparent,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    barColor),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -110,7 +118,6 @@ class OpenIdConnectAndroidiOS {
                           onHorizontalDragUpdate: (_) {},
                           child: flutterWebView.WebViewWidget(
                             controller: _webviewcontroller,
-
                           ),
                         ),
                       ),

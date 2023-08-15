@@ -76,11 +76,16 @@ class OpenIdConnect {
     return AuthorizationResponse.fromJson(response);
   }
 
+  /// Authorize the user using the interactive flow
+  /// processIndicator is only used on android/ios
+  /// barColor is only used on android/ios
+  ///
   static Future<AuthorizationResponse?> authorizeInteractive({
     required BuildContext context,
     required String title,
     required InteractiveAuthorizationRequest request,
     Color? backgroundColor,
+    final Color barColor = Colors.blue,
   }) async {
     late String? responseUrl;
 
@@ -105,6 +110,7 @@ class OpenIdConnect {
         popupWidth: request.popupWidth,
         navigationInterceptor: request.navigationInterceptor,
         backgroundColor: backgroundColor,
+        barColor: barColor,
       );
     } else if (kIsWeb) {
       final storage = FlutterSecureStorage();
