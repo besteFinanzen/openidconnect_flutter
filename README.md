@@ -51,10 +51,9 @@ For Linux and macOS currently your IdP MUST support device code flow to function
 
 Because of the ever changing nature of desktop support on flutter and incomplete plugin implementations the following are outstanding and will be updated when the functionality exists to do so:
 
-1. Use custom tabs and secure authentication popup on Android and IOS instead of WebView
-2. Use Secure authentication popup on windows (requires work from Tim Sneath on integration with Project Reunion on Windows and Dart)
-3. Switch macOs, and Linux to WebView and/or use secure authentication popup at least on macOs.
-4. More documentation!
+1. Use Secure authentication popup on windows (requires work from Tim Sneath on integration with Project Reunion on Windows and Dart)
+2. Switch macOs, and Linux to WebView and/or use secure authentication popup at least on macOs.
+3. More documentation!
 
 ## Contributing
 
