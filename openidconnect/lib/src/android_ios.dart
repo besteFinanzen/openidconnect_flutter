@@ -87,13 +87,20 @@ class OpenIdConnectAndroidiOS {
                   },
                   child: Stack(
                     children: [
-                      Container(
-                        width: min(popupWidth, MediaQuery.of(context).size.width),
-                        child: LinearProgressIndicator(
-                          value: progress / 100,
-                          backgroundColor: Colors.transparent,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              backgroundColor ?? Colors.blue),
+                      if (progress != 100) Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: min(popupWidth, MediaQuery.of(context).size.width),
+                          decoration: BoxDecoration(
+                              color: backgroundColor ?? Colors.black54,
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                          child: LinearProgressIndicator(
+                            value: progress / 100,
+                            minHeight: 10,
+                            backgroundColor: Colors.transparent,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                backgroundColor ?? Colors.blue),
+                          ),
                         ),
                       ),
                       Container(
