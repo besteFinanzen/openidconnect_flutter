@@ -61,57 +61,48 @@ class OpenIdConnectAndroidiOS {
         ));
         return Visibility(
           visible: !inBackground,
-          child: AlertDialog(
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            insetPadding: EdgeInsets.zero,
-            titlePadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            actionsPadding: EdgeInsets.zero,
-            content: WillPopScope(
-              // Catched back button pressed
-              onWillPop: () async {
-                if (await _webviewcontroller.canGoBack()) {
-                  await _webviewcontroller.goBack();
-                  return false;
-                }
-                return true;
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    width: min(popupWidth, MediaQuery.of(context).size.width),
-                    height:
-                        min(popupHeight, MediaQuery.of(context).size.height),
-                    child: GestureDetector(
-                      onHorizontalDragUpdate: (_) {},
-                      child: flutterWebView.WebViewWidget(
-                        controller: _webviewcontroller,
-                      ),
+          child: WillPopScope(
+            // Catched back button pressed
+            onWillPop: () async {
+              if (await _webviewcontroller.canGoBack()) {
+                await _webviewcontroller.goBack();
+                return false;
+              }
+              return true;
+            },
+            child: Stack(
+              children: [
+                Container(
+                  width: min(popupWidth, MediaQuery.of(context).size.width),
+                  height:
+                  min(popupHeight, MediaQuery.of(context).size.height),
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (_) {},
+                    child: flutterWebView.WebViewWidget(
+                      controller: _webviewcontroller,
                     ),
                   ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20))),
-                      child: IconButton(
-                        key: const Key(
-                            'openidconnect__close_auth_window_button'),
-                        onPressed: () {
-                          if (dialogContext.mounted)
-                            Navigator.pop(dialogContext, null);
-                        },
-                        icon: Icon(Icons.close),
-                      ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(20))),
+                    child: IconButton(
+                      key: const Key(
+                          'openidconnect__close_auth_window_button'),
+                      onPressed: () {
+                        if (dialogContext.mounted)
+                          Navigator.pop(dialogContext, null);
+                      },
+                      icon: Icon(Icons.close),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
         );
