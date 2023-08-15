@@ -82,8 +82,7 @@ class OpenIdConnectAndroidiOS {
                 children: [
                   Container(
                     width: min(popupWidth, MediaQuery.of(context).size.width),
-                    height:
-                        min(popupHeight, MediaQuery.of(context).size.height),
+                    height: min(popupHeight, MediaQuery.of(context).size.height),
                     child: GestureDetector(
                       onHorizontalDragUpdate: (_) {},
                       child: flutterWebView.WebViewWidget(
